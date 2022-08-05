@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>AssetConnections | FAAAST-Service Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="AssetConnections | FAAAST-Service Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/adminshellio-48x48.jpg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="assetconnections">AssetConnections</h1>
+
+<p><code>AssetConnection</code> implementations allows connecting/synchronizing elements of your AAS to/with assets via different protocol. This functionality is further divided into  3 so-called provider, namely</p>
+<ul>
+<li><a href="https://github.com/FraunhoferIOSB/FAAAST-Service/blob/main/core/src/main/java/de/fraunhofer/iosb/ilt/faaast/service/assetconnection/AssetValueProvider.java">ValueProvider</a>, supporting reading and writing values from/to the asset, i.e. each time a value is read or written via an endpoint the request is forwarded to the asset</li>
+<li><a href="https://github.com/FraunhoferIOSB/FAAAST-Service/blob/main/core/src/main/java/de/fraunhofer/iosb/ilt/faaast/service/assetconnection/AssetOperationProvider.java">OperationProvider</a>, supporting the execution of operations, i.e. forwards operation invocation requests to the asset and returning the result value,</li>
+<li><a href="https://github.com/FraunhoferIOSB/FAAAST-Service/blob/main/core/src/main/java/de/fraunhofer/iosb/ilt/faaast/service/assetconnection/AssetSubscriptionProvider.java">SubscriptionProvider</a>, supporting synchronizing the AAS with pub/sub-based assets, i.e. subscribes to the assets and updates the AAS with new values over time.</li>
+</ul>
+<p>An implemented does not have to implement all providers, in fact it is often not possible to implement all of them for a given network protocol as most protocols do not support pull-based and pub/sub mechanisms at the same time (e.g. HTTP, MQTT).</p>
+<p>Each provider is connected to exactly one element of the AAS. Each asset connection can have multiples of each provider type. Each FA³ST Service can have multiple asset connections.
+Accordingly, each asset connection configuration supports at least this minimum structure</p>
+<pre><code class="lang-json">{
+	&quot;@class&quot;: &quot;...&quot;,
+	&quot;valueProviders&quot;:
+	{
+		&quot;{serialized Reference of AAS element}&quot;:
+		{
+			// value provider configuration
+		},
+		...
+	},
+	&quot;operationProviders&quot;:
+	{
+		&quot;{serialized Reference of AAS element}&quot;:
+		{
+			// operation provider configuration
+		},
+		...
+	},
+	&quot;subscriptionProviders&quot;:
+	{
+		&quot;{serialized Reference of AAS element}&quot;:
+		{
+			// subscription provider configuration
+		},
+		...
+	}
+}
+</code></pre>
+<p>A concrete example for OPC UA asset connection could look like this</p>
+<pre><code class="lang-json">
+{
+	&quot;@class&quot;: &quot;de.fraunhofer.iosb.ilt.faaast.service.assetconnection.opcua.OpcUaAssetConnection&quot;,
+	&quot;host&quot;: &quot;opc.tcp://localhost:4840&quot;,
+	&quot;valueProviders&quot;:
+	{
+		&quot;(Submodel)[IRI]urn:aas:id:example:submodel:1,(Property)[ID_SHORT]Property1&quot;:
+		{
+			&quot;nodeId&quot;: &quot;some.node.id.property.1&quot;
+		},
+		&quot;(Submodel)[IRI]urn:aas:id:example:submodel:1,(Property)[ID_SHORT]Property2&quot;:
+		{
+			&quot;nodeId&quot;: &quot;some.node.id.property.2&quot;
+		}
+	},
+	&quot;operationProviders&quot;:
+	{
+		&quot;(Submodel)[IRI]urn:aas:id:example:submodel:1,(Operation)[ID_SHORT]Operation1&quot;:
+		{
+			&quot;nodeId&quot;: &quot;some.node.id.operation.1&quot;
+		}
+	},
+	&quot;subscriptionProviders&quot;:
+	{
+		&quot;(Submodel)[IRI]urn:aas:id:example:submodel:1,(Property)[ID_SHORT]Property3&quot;:
+		{
+			&quot;nodeId&quot;: &quot;some.node.id.property.3&quot;,
+			&quot;interval&quot;: 1000
+		}
+	}
+}
+</code></pre>
+<h2 id="mqtt-assetconnection">MQTT AssetConnection</h2>
+<p>The MQTT asset connection supports the following functionality:</p>
+<ul>
+<li><code>ValueProvider</code>: write values only, read not supported</li>
+<li><code>OperationProvider</code>: not supported</li>
+<li><code>SubscriptionProvider</code>: subscribe to value changes</li>
+</ul>
+<p><strong>Configuration Parameters</strong></p>
+<ul>
+<li>on connection level</li>
+<li><code>serverUri</code>: URL of the MQTT server</li>
+<li><code>clientId</code>: id of the MQTT client (optional, default: random)</li>
+<li>on ValueProdiver level</li>
+<li><code>topic</code>: MQTT topic to use</li>
+<li><code>contentFormat</code>: JSON|XML (default: JSON, currently, only JSON supported)</li>
+<li><code>query</code>: additional information how to format messages sent via MQTT - depends on <code>contentFormat</code>. For JSON this is a JSON Path expression.</li>
+<li>on SubscriptionProdiver level</li>
+<li><code>topic</code>: MQTT topic to use</li>
+<li><code>contentFormat</code>: JSON|XML (default: JSON, currently, only JSON supported)</li>
+<li><code>query</code>: additional information how to extract actual value from received messages - depends on <code>contentFormat</code>. For JSON this is a JSON Path expression.</li>
+</ul>
+<p>Example configuration for one of the providers:</p>
+<pre><code class="lang-json">{
+	&quot;topic&quot;: &quot;example/myTopic&quot;,
+	&quot;query&quot;: &quot;$.property.value&quot;,
+	&quot;contentFormat&quot;: &quot;JSON&quot;
+}
+</code></pre>
+<h2 id="opc-ua-assetconnection">OPC UA AssetConnection</h2>
+<p>The OPC UA asset connection supports the following functionality:</p>
+<ul>
+<li><code>ValueProvider</code>: fully supported (read/write)</li>
+<li><code>OperationProvider</code>: invoke operations synchroniously, async invocation not supported</li>
+<li><code>SubscriptionProvider</code>: fully supported</li>
+</ul>
+<p><strong>Configuration Parameters</strong></p>
+<ul>
+<li>on connection level</li>
+<li><code>host</code>: URL of the OPC UA server. Please be sure that the URL starts with <code>opc.tcp://</code>.</li>
+<li>on ValueProdiver level</li>
+<li><code>nodeId</code>: nodeId of the the OPC UA node to read/write</li>
+<li>on OperationProdiver level</li>
+<li><code>nodeId</code>: nodeId of the the OPC UA node representing the OPC UA method to invoke</li>
+<li>on SubscriptionProdiver level</li>
+<li><code>nodeId</code>: nodeId of the the OPC UA node to subscribe to</li>
+<li><code>interval</code>: subscription interval in ms</li>
+</ul>
+<p>Example configuration for a subscription provider:</p>
+<pre><code class="lang-json">{
+	&quot;nodeId&quot;: &quot;some.node.id.property&quot;,
+	&quot;interval&quot;: 1000
+}
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JensMueller2709/FAAAST-Service-docfx/blob/ff94a287be9aa5c32a51440e7e57c6434366a999/docs/articles/AssetConnection.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

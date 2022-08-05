@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>OPC UA Endpoint Interface | FAAAST-Service Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="OPC UA Endpoint Interface | FAAAST-Service Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/adminshellio-48x48.jpg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="opc-ua-endpoint-interface">OPC UA Endpoint Interface</h1>
+<!-- OPC UA ENDPOINT -->
+
+<p>This section introduces the OPC UA Endpoint implementation.</p>
+<p>The OPC UA Endpoint is based on the <a href="https://opcfoundation.org/developer-tools/specifications-opc-ua-information-models/opc-ua-for-i4-asset-administration-shell/">OPC UA Companion Specification OPC UA for Asset Administration Shell (AAS)</a>.
+The release version of this Companion Specification is based on the document <a href="https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details_of_the_Asset_Administration_Shell_Part1_V2.html">Details of the Asset Administration Shell - Part 1 Version 2</a>.</p>
+<p>This implementation is based on <a href="https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details_of_the_Asset_Administration_Shell_Part1_V3.html">Details of the Asset Administration Shell - Part 1 Version 3</a>, which is currently not yet released.
+Therefore, the current implementation is actually not compatible with the Companion Specification.</p>
+<p>The OPC UA Endpoint is built with the <a href="https://www.prosysopc.com/products/opc-ua-java-sdk/">Prosys OPC UA SDK for Java</a>.
+If you want to build the OPC UA Endpoint, you need a valid license for the SDK.</p>
+<p>You can purchase a <a href="https://www.prosysopc.com/products/opc-ua-java-sdk/purchase/">Prosys OPC UA License</a>. As the OPC UA Endpoint is a server, you need a &quot;Client &amp; Server&quot; license.</p>
+<p>For evaluation purposes, you also have the possibility to request an <a href="https://www.prosysopc.com/products/opc-ua-java-sdk/evaluate">evaluation license</a>.</p>
+<p>In order to use the OPC UA Endpoint, the configuration settings require to include an OPC UA Endpoint configuration, like the one below:</p>
+<pre><code class="lang-json">{
+	&quot;endpoints&quot;: [
+		{
+			&quot;@class&quot;: &quot;de.fraunhofer.iosb.ilt.faaast.service.endpoint.opcua.OpcUaEndpoint&quot;,
+			&quot;tcpPort&quot; : 4840,
+			&quot;secondsTillShutdown&quot; : 5
+		}
+	]
+}
+</code></pre>
+<p>OPC UA Endpoint configuration supports the following configuration parameters</p>
+<ul>
+<li><code>tcpPort</code> is the desired Port for the OPC UA TCP Protocol (opc.tcp). Default is 4840.</li>
+<li><code>secondsTillShutdown</code> is the number of seconds the server waits for clients to disconnect when stopping the Endpoint. When the Endpoint is stopped, the server sends a predefined event to all connected clients, that the OPC UA Server is about to shutdown. Now, the OPC UA Server waits the given number of seconds before he stops, to give the clients the possibility to disconnect from the Server. When <code>secondsTillShutdown</code> is 0, the Endpoint doesn't wait and stops immediately.</li>
+</ul>
+<p>To connect to the OPC UA Endpoint, you need an OPC UA Client.
+Here are some examples of OPC UA Clients:</p>
+<ul>
+<li><p><a href="https://www.unified-automation.com/downloads/opc-ua-clients.html">Unified Automation UaExpert</a>
+UaExpert is a free test client for OPC UA. A registration for the website is required.</p>
+</li>
+<li><p><a href="https://www.prosysopc.com/products/opc-ua-browser/">Prosys OPC UA Browser</a>
+Free Java-based OPC UA Client. A registration for the website is required.</p>
+</li>
+<li><p><a href="https://github.com/OPCFoundation/UA-.NETStandard-Samples">Official Samples from the OPC Foundation</a>
+C#-based sample code from the OPC Foundation.</p>
+</li>
+<li><p><a href="https://github.com/eclipse/milo">Eclipse Milo</a>
+Java-based Open Source SDK for Java.</p>
+</li>
+</ul>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<p>The OPC UA Endpoint allows accessing data and execute operations within the FA³ST-Service via OPC UA.
+For detailed information on OPC UA see
+<a href="https://opcfoundation.org/about/opc-technologies/opc-ua/">About OPC UA</a></p>
+<p>The OPC UA Endpoint is based on the <a href="https://opcfoundation.org/developer-tools/specifications-opc-ua-information-models/opc-ua-for-i4-asset-administration-shell/">OPC UA Companion Specification OPC UA for Asset Administration Shell (AAS)</a>.
+The release version of this Companion Specification is based on the document <a href="https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details_of_the_Asset_Administration_Shell_Part1_V2.html">Details of the Asset Administration Shell - Part 1 Version 2</a>.</p>
+<p>This implementation is based on <a href="https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details_of_the_Asset_Administration_Shell_Part1_V3.html">Details of the Asset Administration Shell - Part 1 Version 3</a>, which is currently not yet released.
+Therefore, the current implementation is actually not compatible with the Companion Specification.</p>
+<p>The OPC UA Endpoint is built with the <a href="https://www.prosysopc.com/products/opc-ua-java-sdk/">Prosys OPC UA SDK for Java</a>.
+If you want to build the OPC UA Endpoint, you need a valid license for the SDK.</p>
+<p>You can purchase a <a href="https://www.prosysopc.com/products/opc-ua-java-sdk/purchase/">Prosys OPC UA License</a>. As the OPC UA Endpoint is a server, you need a &quot;Client &amp; Server&quot; license.</p>
+<p>For evaluation purposes, you also have the possibility to request an <a href="https://www.prosysopc.com/products/opc-ua-java-sdk/evaluate">evaluation license</a>.</p>
+<p>In order to use the OPC UA Endpoint, the configuration settings require to include an OPC UA Endpoint configuration, like the one below:</p>
+<pre><code class="lang-json">{
+	&quot;endpoints&quot;: [
+		{
+			&quot;@class&quot;: &quot;de.fraunhofer.iosb.ilt.faaast.service.endpoint.opcua.OpcUaEndpoint&quot;,
+			&quot;tcpPort&quot; : 18123,
+			&quot;secondsTillShutdown&quot; : 5
+		}
+	]
+}
+</code></pre>
+<p>&quot;tcpPort&quot; is the desired Port for the OPC UA TCP Protocol (opc.tcp).
+&quot;secondsTillShutdown&quot; is the number of seconds the server waits for clients to disconnect when stopping the Endpoint.
+When the Endpoint is stopped, the server sends a predefined event to all connected clients, that the OPC UA Server is about to shutdown. Now, the OPC UA Server waits the given number of seconds before he stops, to give the clients the possibility to disconnect from the Server.
+When &quot;secondsTillShutdown&quot; is 0, the Endpoint doesn't wait and stops immediately.</p>
+<p>To connect to the OPC UA Endpoint, you need an OPC UA Client.
+Here are some examples of OPC UA Clients:</p>
+<ul>
+<li><p><a href="https://www.unified-automation.com/downloads/opc-ua-clients.html">Unified Automation UaExpert</a>
+UaExpert is a free test client for OPC UA. A registration for the website is required.</p>
+</li>
+<li><p><a href="https://www.prosysopc.com/products/opc-ua-browser/">Prosys OPC UA Browser</a>
+Free Java-based OPC UA Client. A registration for the website is required.</p>
+</li>
+<li><p><a href="https://github.com/OPCFoundation/UA-.NETStandard-Samples">Official Samples from the OPC Foundation</a>
+C#-based sample code from the OPC Foundation.</p>
+</li>
+<li><p><a href="https://github.com/eclipse/milo">Eclipse Milo</a>
+Java-based Open Source SDK for Java.</p>
+</li>
+</ul>
+<p>Here you can see a sample Screenshot with UaExpert.
+<img src="./images/OpcUaEndpoint.png/" alt="Screenshot with UaExpert" title="Screenshot with UaExpert"></p>
+<h2 id="supported-functions">Supported Functions</h2>
+<ul>
+<li><p>Operations (OPC UA method calls). Exception: Inoutput-Variables are not supported in OPC UA.</p>
+</li>
+<li><p>Write Values</p>
+<ul>
+<li><p>Property</p>
+</li>
+<li><p>Value</p>
+</li>
+<li><p>Range</p>
+</li>
+<li><p>Min</p>
+<ul>
+<li>Max</li>
+</ul>
+</li>
+<li><p>Blob</p>
+</li>
+<li><p>Value</p>
+</li>
+<li><p>MultiLanguageProperty</p>
+</li>
+<li><p>Value</p>
+</li>
+<li><p>ReferenceElement</p>
+</li>
+<li><p>Value</p>
+</li>
+<li><p>RelationshipElement</p>
+</li>
+<li><p>First</p>
+<ul>
+<li>Second</li>
+</ul>
+</li>
+<li><p>Entity</p>
+</li>
+<li><p>GlobalAssetID</p>
+<ul>
+<li>Type</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="not-yet-supported-functions">Not (yet) Supported Functions</h2>
+<ul>
+<li><p>Events (not yet supported)</p>
+</li>
+<li><p>Write Values (not yet supported)</p>
+<ul>
+<li>DataSpecifications</li>
+<li>Qualifier</li>
+<li>Category</li>
+<li>ModelingKind</li>
+</ul>
+</li>
+<li><p>AASValueTypeDataType (not yet supported)</p>
+<ul>
+<li>ByteString</li>
+<li>Byte</li>
+<li>UInt16</li>
+<li>UInt32</li>
+<li>UInt64</li>
+<li>DateTime</li>
+<li>LocalizedText</li>
+<li>UtcTime</li>
+</ul>
+</li>
+</ul>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<hr>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JensMueller2709/FAAAST-Service-docfx/blob/ff94a287be9aa5c32a51440e7e57c6434366a999/docs/articles/opcuaendpoint.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

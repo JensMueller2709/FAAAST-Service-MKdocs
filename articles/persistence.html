@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Persistence | FAAAST-Service Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Persistence | FAAAST-Service Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/adminshellio-48x48.jpg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="persistence">Persistence</h1>
+
+<p>Each persistence configuration supports at least the following configuration parameters:</p>
+<ul>
+<li><code>initialModel</code> (optional, can be overriden by CLI parameter or environment variable): Path to the AAS Environment model file</li>
+<li><code>decoupleEnvironment</code> (optional, default: <code>true</code>): Only applicable if the AAS Environment is given as Java Object. If set to true, the persistence makes a deep copy of the AAS Environment and decouples the internal AAS Environment from the AAS Environment parsed on startup. If set to false, the same object instance is used in the FA³ST Service, which may have unexpected side effects.</li>
+</ul>
+<p>Example of a persistence configuration:</p>
+<pre><code class="lang-json">{
+	&quot;persistence&quot; : {
+		&quot;@class&quot; : &quot;de.fraunhofer.iosb.ilt.faaast.service.persistence.memory.PersistenceInMemory&quot;,
+		&quot;initialModel&quot; : &quot;{pathTo}/FAAAST-Service/misc/examples/demoAAS.json&quot;,
+		&quot;decoupleEnvironment&quot; : true
+	}
+}
+</code></pre>
+<p>Not yet implemented:</p>
+<ul>
+<li>AASX Packages</li>
+<li>Package Descriptors</li>
+<li>SubmodelElementStructs</li>
+</ul>
+<h2 id="in-memory-persistence">In Memory Persistence</h2>
+<p>The In Memory Persistence implementation keeps the AAS environment model parsed at startup in the local memory. Any change request, such as changing the value of a property, results in a change to the AAS environment model in the local memory. When the FA³ST Service is stopped, the changes to the AAS environment are lost.</p>
+<p>The In Memory Persistence has no additional configuration parameters.</p>
+<h2 id="file-persistence">File Persistence</h2>
+<p>The file persistence keeps the entire AAS Environment in a model file which is stored at the local machine. Any change request, such as changing the value of a property, results in a change to the AAS environment model file. Thus, changes are stored permanently.</p>
+<p>File Persistence configuration supports the following configuration parameters:</p>
+<ul>
+<li><code>dataDir</code> (optional, default: <code>/</code>): Path under which the model file created by the persistence is to be saved</li>
+<li><code>keepInitial</code> (optional, default: <code>true</code>): If false the model file parsed on startup will be overriden with changes. If true a copy of the model file will be created by the persistence which keeps the changes.</li>
+<li><code>dataformat</code> (optional, default: same data format as input file): Determines the data format of the created file by file persistence. Ignored if the <code>keepInitial</code> parameter is set to false. Supported data formats are <code>JSON</code>, <code>XML</code>, <code>AML</code>, <code>RDF</code>, <code>AASX</code>, <code>JSONLD</code>, <code>UANODESET</code>.</li>
+</ul>
+<p>Example configuration for the file persistence:</p>
+<pre><code class="lang-json">{
+	&quot;persistence&quot; : {
+		&quot;@class&quot; : &quot;de.fraunhofer.iosb.ilt.faaast.service.persistence.file.PersistenceFile&quot;,
+		&quot;initialModel&quot; : &quot;{pathTo}/FAAAST-Service/misc/examples/demoAAS.json&quot;,
+		&quot;dataDir&quot;: &quot;.&quot;,
+		&quot;keepInitial&quot;: true,
+		&quot;dataformat&quot;: &quot;XML&quot;
+	}
+}
+</code></pre>
+<hr>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JensMueller2709/FAAAST-Service-docfx/blob/ff94a287be9aa5c32a51440e7e57c6434366a999/docs/articles/persistence.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

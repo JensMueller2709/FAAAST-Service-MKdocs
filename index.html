@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>FA&#179;ST Service     | FAAAST-Service Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="FA&#179;ST Service     | FAAAST-Service Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="images/adminshellio-48x48.jpg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="fast-service-build-status-codacy-badge-docker-badge-">FA³ST Service <a href="https://github.com/FraunhoferIOSB/FAAAST-Service/actions"><img src="https://github.com/FraunhoferIOSB/FAAAST-Service/workflows/Maven%20Build/badge.svg" alt="Build Status"></a> <a href="https://www.codacy.com/gh/FraunhoferIOSB/FAAAST-Service/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=FraunhoferIOSB/FAAAST-Service&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/25f6aafbdb0a4b5e8ba23672ec9411e5" alt="Codacy Badge"></a> <a href="https://hub.docker.com/r/fraunhoferiosb/faaast-service/"><img src="https://img.shields.io/docker/pulls/fraunhoferiosb/faaast-service.svg" alt="Docker badge"></a> <a href="https://sonarcloud.io/summary/new_code?id=FraunhoferIOSB_FAAAST-Service"><img src="https://sonarcloud.io/images/project_badges/sonarcloud-white.svg" alt="SonarCloud badge" width="105"></a></h1>
+
+<p><img src="./images/Fa3st-Service_positiv.png/#gh-light-mode-only" alt="FA³ST Logo Light" title="FA³ST Service Logo">
+<img src="./images/Fa3st-Service_negativ.png/#gh-dark-mode-only" alt="FA³ST Logo Dark" title="FA³ST Service Logo"></p>
+<p>The <strong>F</strong>raunhofer <strong>A</strong>dvanced <strong>A</strong>sset <strong>A</strong>dministration <strong>S</strong>hell <strong>T</strong>ools (<strong>FA³ST</strong>) Service implements the <a href="https://www.plattform-i40.de/SiteGlobals/IP/Forms/Listen/Downloads/EN/Downloads_Formular.html?cl2Categories_TechnologieAnwendungsbereich_name=Verwaltungsschale">Asset Administration Shell (AAS) specification from the platform Industrie 4.0</a> and builds an easy-to-use web service based on a custom AAS model instance. If you are not familiar with AAS you can find additional information <a href="#about-the-project">here</a>.</p>
+<table>
+<thead>
+<tr>
+<th>FA³ST Service is still under development. Contributions in form of issues and pull requests are highly welcome.</th>
+</tr>
+</thead>
+</table>
+<p><b>Implemented AAS versions</b>
+| Part | Version | Comment |
+|:--| -- | -- |
+| Part 1 - The exchange of information between partners in the value chain of Industrie 4.0 | Version 3.0RC01* | * We are using the AAS model java implementation from <a href="https://github.com/admin-shell-io/java-model">admin-shell-io</a> which is based on Version 3.0RC01 but also covers already some aspects from RC02 |
+| Part 2 – Interoperability at Runtime – Exchanging Information via Application Programming Interfaces | Version 1.0RC02 |  |</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>This is an example of how to set up your project locally.
+To get a local copy up and running follow these simple example steps.
+To compile the FA³ST service you need to have a JDK and Maven installed.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Java 11+</li>
+<li>Maven</li>
+</ul>
+<h3 id="building-from-source">Building from Source</h3>
+<pre><code class="lang-sh">git clone https://github.com/FraunhoferIOSB/FAAAST-Service
+cd FAAAST-Service
+mvn clean install
+</code></pre>
+<h3 id="use">Use</h3>
+<h4 id="from-jar">From JAR</h4>
+<p><a href="https://search.maven.org/remote_content?g=de.fraunhofer.iosb.ilt.faaast.service&amp;a=starter&amp;v=LATEST">Download latest version as precompiled JAR</a></p>
+<p>To start the Service from command line use the following commands.</p>
+<pre><code class="lang-sh">cd /starter/target
+java -jar starter-{version}.jar -m {path/to/your/AASEnvironment}
+</code></pre>
+<p>For further information on using the command line see <a href="#usage-with-command-line">here</a>.</p>
+<h4 id="as-maven-dependency">As Maven Dependency</h4>
+<pre><code class="lang-xml">&lt;dependency&gt;
+	&lt;groupId&gt;de.fraunhofer.iosb.ilt.faaast.service&lt;/groupId&gt;
+	&lt;artifactId&gt;starter&lt;/artifactId&gt;
+	&lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="as-gradle-dependency">As Gradle Dependency</h4>
+<pre><code class="lang-kotlin">implementation 'de.fraunhofer.iosb.ilt.faaast.service:starter:0.1.0'
+</code></pre>
+<p>A maven plugin we are using in our build script leads to an error while resolving the dependency tree in gradle. Therefore you need to add following code snippet in your <code>build.gradle</code>. This code snippet removes the classifier of the transitive dependency <code>com.google.inject:guice</code>.</p>
+<pre><code class="lang-kotlin">configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details -&gt;
+		if (details.requested.module.toString() == &quot;com.google.inject:guice&quot;) {
+			details.artifactSelection{
+				it.selectArtifact(DependencyArtifact.DEFAULT_TYPE, null, null)
+			}
+		}
+	}
+}
+</code></pre>
+<h3 id="example">Example</h3>
+<p>The following code starts a FA³ST Service with a HTTP endpoint on port 8080.</p>
+<pre><code class="lang-java">String pathToYourAASEnvironment = &quot;{pathTo}\\FAAAST-Service\\misc\\examples\\demoAAS.json&quot;;
+AssetAdministrationShellEnvironment environment = AASEnvironmentHelper.fromFile(new File(pathToYourAASEnvironment));
+Service service = new Service(environment,
+	new ServiceConfig.Builder()
+		.core(new CoreConfig.Builder()
+			.requestHandlerThreadPoolSize(2)
+			.build())
+		.persistence(new PersistenceInMemoryConfig())
+		.endpoint(new HttpEndpointConfig())
+		.messageBus(new MessageBusInternalConfig())
+		.build());
+service.start();
+</code></pre>
+<p>Afterwards, you can reach the running FA³ST Service via <code>http://localhost:8080/shells</code>.</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<h2 id="features">Features</h2>
+<p>FA³ST Service provides the following functionalities:</p>
+<ul>
+<li>supports several dataformats for the Asset Administration Shell Environment: <code>json, json-ld, xml, aml, rdf, opcua nodeset</code></li>
+<li>easy configuration via JSON file (see <a href="#Configuration">details</a>)</li>
+<li>easily expandable with 3rd party implementations for <code>endpoint, messagebus, persistence, assetconnection</code></li>
+<li>uses existing open source implementation of AAS datamodel and de-/serializers <a href="https://github.com/admin-shell-io/java-serializer">admin-shell-io java serializer</a> and <a href="https://github.com/admin-shell-io/java-model">admin-shell-io java model</a></li>
+<li>synchronization between multiple endpoints</li>
+<li>connecting to assets using arbitrary communication protocols</li>
+</ul>
+<h3 id="third-party-license">Third Party License</h3>
+<p>If you use additional dependencies please be sure that the licenses of these dependencies are compliant with our <a href="#license">License</a>. If you are not sure which license your dependencies have, you can run</p>
+<blockquote>
+<p>mvn license:aggregate-third-party-report</p>
+</blockquote>
+<p>and check the generated report in the directory <code>documentation/third_party_licenses_report.html</code>.</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<h2 id="contributors">Contributors</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th>Github Account</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Michael Jacoby</td>
+<td><a href="https://github.com/mjacoby">mjacoby</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Jens Müller</td>
+<td><a href="https://github.com/JensMueller2709">JensMueller2709</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Klaus Schick</td>
+<td><a href="https://github.com/schick64">schick64</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Tino Bischoff</td>
+<td><a href="https://github.com/tbischoff2">tbischoff2</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Friedrich Volz</td>
+<td><a href="https://github.com/fvolz">fvolz</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="contact">Contact</h2>
+<p>faaast@iosb.fraunhofer.de</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<h2 id="license">License</h2>
+<p>Distributed under the Apache 2.0 License. See <code>LICENSE</code> for more information.</p>
+<p>Copyright (C) 2022 Fraunhofer Institut IOSB, Fraunhoferstr. 1, D 76131 Karlsruhe, Germany.</p>
+<p>You should have received a copy of the Apache 2.0 License along with this program. If not, see <a href="https://www.apache.org/licenses/LICENSE-2.0.html">https://www.apache.org/licenses/LICENSE-2.0.html</a>.</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JensMueller2709/FAAAST-Service-docfx/blob/ff94a287be9aa5c32a51440e7e57c6434366a999/docs/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

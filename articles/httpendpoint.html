@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HTTP-Endpoint Interface | FAAAST-Service Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="HTTP-Endpoint Interface | FAAAST-Service Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/adminshellio-48x48.jpg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="http-endpoint-interface">HTTP-Endpoint Interface</h1>
+
+<p>This section introduces the HTTP Endpoint implementation.</p>
+<p>The exposed REST API is based on the document <a href="https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details_of_the_Asset_Administration_Shell_Part2_V1.html">Details of the Asset Administration Shell - Part 2</a>, and the OpenAPI documentation <a href="https://app.swaggerhub.com/apis/Plattform_i40/Entire-Interface-Collection/V1.0RC01">DotAAS Part 2 | HTTP/REST | Entire Interface Collection</a>.</p>
+<p>HTTP Endpoint configuration supports the following configuration parameters</p>
+<ul>
+<li><code>port</code> (optional, default: 8080)</li>
+</ul>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<h4 id="example-get-details-of-a-submodelelement">Example: Get details of a SubmodelElement</h4>
+<pre><code class="lang-sh">HTTP GET http://localhost:8080/submodels/{submodelIdentifier (base64URL-encoded)}/submodel/submodel-elements/{idShortPath}?{optional query parameters}
+</code></pre>
+<p>For a concrete scenario with</p>
+<ul>
+<li><em>submodelIdentifier</em>: <a href="https://acplt.org/Test_Submodel">https://acplt.org/Test_Submodel</a></li>
+<li><em>idShortPath</em>: ExampleRelationshipElement</li>
+</ul>
+<p>and the query-parameters <em>level=deep</em> and <em>content=normal</em>.</p>
+<pre><code class="lang-sh">HTTP GET http://localhost:8080/submodels/aHR0cHM6Ly9hY3BsdC5vcmcvVGVzdF9TdWJtb2RlbA==/submodel/submodel-elements/ExampleRelationshipElement?level=deep&amp;content=normal
+</code></pre>
+<h3 id="the-following-interface-urls-are-currently-not-yet-supported">The following interface URLs are currently not (yet) supported</h3>
+<ul>
+<li>Submodel Repository Interface (Alternative Interface URLs &quot;Swagger Doc Feb. 2022&quot;,
+<a href="https://app.swaggerhub.com/apis/Plattform_i40/AssetAdministrationShell-Environment/V1.0RC01#/Asset%20Administration%20Shell%20Environment/GetSubmodel">DotAAS Part 2 | HTTP/REST | Asset Administration Shell Repository</a> (yet not fully specified))</li>
+</ul>
+<blockquote>
+<p>/shells/{aasIdentifier}/aas/submodels/{submodelIdentifier}/...</p>
+</blockquote>
+<ul>
+<li>AASX File Server Interface (not yet supported)</li>
+</ul>
+<blockquote>
+<p>/packages</p>
+</blockquote>
+<ul>
+<li>Asset Administration Shell Serialization Interface (not yet supported)</li>
+</ul>
+<blockquote>
+<p>/serialization (GET)</p>
+</blockquote>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<p>The HTTP-Endpoint allows accessing data and execute operations within the FA³ST-Service via REST-API.
+The HTTP-Endpoint Interface is based on the document <a href="https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details_of_the_Asset_Administration_Shell_Part2_V1.html">Details of the Asset Administration Shell - Part 2</a>, <em>Interoperability at Runtime –
+Exchanging Information via Application
+Programming Interfaces (Version 1.0RC02)</em>' , November 2021 and the OpenAPI documentation <a href="https://app.swaggerhub.com/apis/Plattform_i40/Entire-Interface-Collection/V1.0RC01">DotAAS Part 2 | HTTP/REST | Entire Interface Collection</a>, Apr, 26th 2022</p>
+<p>For detailed information on the REST API see
+<a href="https://app.swaggerhub.com/apis/Plattform_i40/Entire-Interface-Collection/V1.0RC01">DotAAS Part 2 | HTTP/REST | Entire Interface Collection</a>, Apr, 26th 2022</p>
+<p>In order to use the HTTP-Endpoint the configuration settings require to include an HTTP-Endpoint configuration, like the one below:</p>
+<pre><code class="lang-json">{
+	&quot;endpoints&quot;: [
+		{
+			&quot;@class&quot;: &quot;de.fraunhofer.iosb.ilt.faaast.service.endpoint.http.HttpEndpoint&quot;,
+			&quot;port&quot;: 8080
+		}
+	]
+}
+</code></pre>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<!-- HTTP-EXAMPLE -->
+<h2 id="http-example">HTTP Example</h2>
+<p>Sample HTTP-Call for Operation <em>GetSubmodelElementByPath</em>
+using the parameters</p>
+<ul>
+<li><em>submodelIdentifier</em>: <a href="https://acplt.org/Test_Submodel">https://acplt.org/Test_Submodel</a> (must be base64URL-encoded)</li>
+<li><em>idShortPath</em>: ExampleRelationshipElement (must be URL-encoded)</li>
+</ul>
+<p>using the query-parameters <em>level=deep</em> and <em>content=normal</em>.</p>
+<blockquote>
+<p>To avoid problems with IRIs in URLs the identifiers shall be BASE64-URL-encoded before using them as parameters in the HTTP-APIs. IdshortPaths are URL-encoded to handle including square brackets.</p>
+</blockquote>
+<pre><code class="lang-sh">http://localhost:8080/submodels/aHR0cHM6Ly9hY3BsdC5vcmcvVGVzdF9TdWJtb2RlbA==/submodel/submodel-elements/ExampleRelationshipElement?level=deep&amp;content=normal
+</code></pre>
+<p>Returns a specific submodel element from the Submodel at a specified path</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<hr>
+<h2 id="http-api">HTTP-API</h2>
+<h3 id="the-following-interface-urls-are-fully-supported">The following interface URLs are fully supported</h3>
+<ul>
+<li><p>Asset Administration Shell Repository Interface</p>
+<ul>
+<li>/shells (GET, POST)</li>
+<li>/shells/{aasIdentifier} (GET, PUT, DELETE)</li>
+</ul>
+</li>
+<li><p>Asset Administration Shell Interface</p>
+<ul>
+<li>/shells/{aasIdentifier}/aas (GET, PUT)</li>
+<li>/shells/{aasIdentifier}/aas/asset-information (GET, PUT)</li>
+<li>/shells/{aasIdentifier}/aas/submodels (GET,POST)</li>
+<li>/shells/{aasIdentifier}/aas/submodels{submodeIdentifier} (DELETE)</li>
+</ul>
+</li>
+<li><p>Submodel Repository Interface</p>
+<ul>
+<li>/submodels (GET, POST)</li>
+<li>/submodels/{submodelIdentifier} (GET, PUT, DELETE)</li>
+</ul>
+</li>
+<li><p>Submodel Interface</p>
+<ul>
+<li>/submodels/{submodelIdentifier}/submodel (GET, PUT)</li>
+<li>/submodels/{submodelIdentifier}/submodel/submodel-elements (POST)</li>
+<li>/submodels/{submodelIdentifier}/submodel/submodel-elements/{idShortPath} (GET, POST, PUT, DELETE)</li>
+<li>/submodels/{submodelIdentifier}/submodel/submodel-elements/{idShortPath}/invoke (POST)</li>
+<li>/submodels/{submodelIdentifier}/submodel/submodel-elements/{idShortPath}/operation-Results/{handle-Id} (GET)</li>
+</ul>
+</li>
+<li><p>Concept Description Repository Interface</p>
+<ul>
+<li>concept-descriptions (GET, POST)</li>
+<li>concept-descriptions/{cdIdentifier} (GET, PUT, DELETE)</li>
+</ul>
+</li>
+</ul>
+<h3 id="optional-query-params-are">Optional query params are</h3>
+<ul>
+<li>level=deep/core</li>
+<li>content=normal/trimmed/value</li>
+<li>extent=WithoutBLOBValue/WithBLOBValue</li>
+<li>InvokeOperation supports async=true/false</li>
+</ul>
+<p>They are added to the URL as regular query params</p>
+<pre><code class="lang-sh">http://url:port?level=deep&amp;content=value
+</code></pre>
+<p>FA³ST Service currently supports only content=value and content=normal</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<h3 id="the-following-interface-urls-are-currently-not-yet-supported-1">The following interface URLs are currently not (yet) supported</h3>
+<ul>
+<li><p>Submodel Repository Interface (Alternative Interface URLs &quot;Swagger Doc May 2022&quot;, <a href="https://app.swaggerhub.com/apis/Plattform_i40/AssetAdministrationShell-Environment/V1.0RC01#/Asset%20Administration%20Shell%20Environment/GetSubmodel">DotAAS Part 2 | HTTP/REST | Asset Administration Shell Repository</a> (yet not fully specified))</p>
+<ul>
+<li>/shells/{aasIdentifier}/aas/submodels/{submodelIdentifier}/submodel</li>
+<li>/shells/{aasIdentifier}/aas/submodels/{submodelIdentifier}/submodel/submodel-elements</li>
+<li>/shells/{aasIdentifier}/aas/submodels/{submodelIdentifier}/submodel/submodel-elements/{idShortPath}</li>
+<li>/shells/{aasIdentifier}/aas/submodels/{submodelIdentifier}/submodel/submodel-elements/{idShortPath}/invoke</li>
+<li>/shells/{aasIdentifier}/aas/submodels/{submodelIdentifier}/submodel/submodel-elements/{idShortPath}/operation-results/{handleId}</li>
+</ul>
+</li>
+<li><p>Asset Administration Shell Registry Interface (not in Scope of FA³ST-Service)</p>
+</li>
+<li><p>Submodel Registry Interface (not in Scope of FA³ST-Service)</p>
+</li>
+<li><p>AASX File Server Interface (not yet supported)</p>
+<ul>
+<li>/packages</li>
+<li>/packages/{packageId}</li>
+</ul>
+</li>
+<li><p>Asset Administration Shell Serialization Interface (not yet supported)</p>
+<ul>
+<li>/serialization (GET)</li>
+</ul>
+</li>
+<li><p>Asset Administration Shell Basic Discovery (not yet supported)</p>
+<ul>
+<li>/lookup/shells</li>
+<li>/lookup/shells/{aasIdentifier}</li>
+</ul>
+</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JensMueller2709/FAAAST-Service-docfx/blob/ff94a287be9aa5c32a51440e7e57c6434366a999/docs/articles/httpendpoint.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

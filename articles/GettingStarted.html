@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Getting Started | FAAAST-Service Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Getting Started | FAAAST-Service Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/adminshellio-48x48.jpg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="getting-started">Getting Started</h1>
+
+<p>This is an example of how to set up your project locally.
+To get a local copy up and running follow these simple example steps.
+To compile the FA³ST service you need to have a JDK and Maven installed.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Java 11+</li>
+<li>Maven</li>
+</ul>
+<h3 id="building-from-source">Building from Source</h3>
+<pre><code class="lang-sh">git clone https://github.com/FraunhoferIOSB/FAAAST-Service
+cd FAAAST-Service
+mvn clean install
+</code></pre>
+<h3 id="use">Use</h3>
+<h4 id="from-jar">From JAR</h4>
+<p><a href="https://search.maven.org/remote_content?g=de.fraunhofer.iosb.ilt.faaast.service&amp;a=starter&amp;v=LATEST">Download latest version as precompiled JAR</a></p>
+<p>To start the Service from command line use the following commands.</p>
+<pre><code class="lang-sh">cd /starter/target
+java -jar starter-{version}.jar -m {path/to/your/AASEnvironment}
+</code></pre>
+<p>For further information on using the command line see <a href="#usage-with-command-line">here</a>.</p>
+<h4 id="as-maven-dependency">As Maven Dependency</h4>
+<pre><code class="lang-xml">&lt;dependency&gt;
+	&lt;groupId&gt;de.fraunhofer.iosb.ilt.faaast.service&lt;/groupId&gt;
+	&lt;artifactId&gt;starter&lt;/artifactId&gt;
+	&lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="as-gradle-dependency">As Gradle Dependency</h4>
+<pre><code class="lang-kotlin">implementation 'de.fraunhofer.iosb.ilt.faaast.service:starter:0.1.0'
+</code></pre>
+<p>A maven plugin we are using in our build script leads to an error while resolving the dependency tree in gradle. Therefore you need to add following code snippet in your <code>build.gradle</code>. This code snippet removes the classifier of the transitive dependency <code>com.google.inject:guice</code>.</p>
+<pre><code class="lang-kotlin">configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details -&gt;
+		if (details.requested.module.toString() == &quot;com.google.inject:guice&quot;) {
+			details.artifactSelection{
+				it.selectArtifact(DependencyArtifact.DEFAULT_TYPE, null, null)
+			}
+		}
+	}
+}
+</code></pre>
+<h3 id="example">Example</h3>
+<p>The following code starts a FA³ST Service with a HTTP endpoint on port 8080.</p>
+<pre><code class="lang-java">String pathToYourAASEnvironment = &quot;{pathTo}\\FAAAST-Service\\misc\\examples\\demoAAS.json&quot;;
+AssetAdministrationShellEnvironment environment = AASEnvironmentHelper.fromFile(new File(pathToYourAASEnvironment));
+Service service = new Service(environment,
+	new ServiceConfig.Builder()
+		.core(new CoreConfig.Builder()
+			.requestHandlerThreadPoolSize(2)
+			.build())
+		.persistence(new PersistenceInMemoryConfig())
+		.endpoint(new HttpEndpointConfig())
+		.messageBus(new MessageBusInternalConfig())
+		.build());
+service.start();
+</code></pre>
+<p>Afterwards, you can reach the running FA³ST Service via <code>http://localhost:8080/shells</code>.</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
+<h2 id="usage-with-command-line">Usage with Command Line</h2>
+<p>This section provides a short introduction of the most important command line arguments. For more details see the <a href="./documentation/commandline.md">full documentation</a>.</p>
+<p>If not already done, follow the step in <a href="#building-from-source">Building from Source</a>.</p>
+<ol>
+<li>Move to the output folder of the starter</li>
+</ol>
+<pre><code class="lang-sh">cd starter/target
+</code></pre>
+<ol start="2">
+<li>Execute the <code>.jar</code> file to start a FA³ST Service directly with a default configuration. Replace the <code>{path/to/your/AASEnvironment}</code> with your file to the Asset Administration Shell Environment you want to load with the FA³ST Service. If you just want to play around, you can use a example AASEnvironment from us <a href="starter/src/test/resources/AASFull.json">here</a>.</li>
+</ol>
+<pre><code class="lang-sh">java -jar starter-{version}.jar -m {path/to/your/AASEnvironment}
+</code></pre>
+<p>Currently we supporting following formats of the Asset Administration Shell Environment model:</p>
+<blockquote>
+<p>json, json-ld, aml, xml, opcua nodeset, rdf</p>
+</blockquote>
+<p>
+<p>Following command line parameters could be used:</p>
+<pre><code>\[&lt;String=String&gt;...\]   		Additional properties to override values of configuration using
+				JSONPath notation without starting '$.' (see https://goessner.net/articles/JsonPath/)
+
+-c, --config=&lt;configFile&gt;  	The config file path. Default Value = config.json
+
+--emptyModel 			Starts the FA³ST service with an empty Asset Administration Shell Environment.
+				False by default
+
+--endpoint=&lt;endpoints&gt;\[,&lt;endpoints&gt;...\]
+				Additional endpoints that should be started.
+
+-h, --help                 	Show this help message and exit.
+
+-m, --model=&lt;modelFile&gt;    	Asset Administration Shell Environment FilePath.
+				Default Value = aasenvironment.*
+
+--\[no-\]autoCompleteConfig
+				Autocompletes the configuration with default
+				values for required configuration sections. True
+				by default
+
+--\[no-\]modelValidation 		Validates the AAS Environment. True by default
+
+-V, --version              	Print version information and exit.
+</code></pre>
+<h2 id="usage-with-docker">Usage with Docker</h2>
+<h3 id="docker-compose">Docker-Compose</h3>
+<p>Clone this repository, navigate to <code>/misc/docker/</code> and run this command inside it.</p>
+<pre><code class="lang-sh">cd misc/docker
+docker-compose up
+</code></pre>
+<p>To use your own AAS environment replace the model file <code>/misc/examples/demoAAS.json</code>.
+To modify the configuration edit the file <code>/misc/examples/exampleConfiguration.json</code>.
+You can also override configuration values using environment variables <a href="./documentation/commandline.md">see details</a>.</p>
+<h3 id="docker-cli">Docker CLI</h3>
+<p>To start the FA³ST service with an empty AAS environment execute this command.</p>
+<pre><code class="lang-sh">docker run --rm -P fraunhoferiosb/faaast-service '--emptyModel' '--no-modelValidation'
+</code></pre>
+<p>To start the FA³ST service with your own AAS environment, place the JSON-file (in this example <code>demoAAS.json</code>) containing your enviroment in the current directory and modify the command accordingly.</p>
+<pre><code class="lang-sh">docker run --rm -v ../examples/demoAAS.json:/AASEnv.json -e faaast.model=AASEnv.json -P fraunhoferiosb/faaast-service '--no-modelValidation'
+</code></pre>
+<p>Similarly to the above examples you can pass more arguments to the FA³ST service by using the CLI or a configuration file as provided in the cfg folder (use the <code>faaast.config</code> environment variable for that).</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JensMueller2709/FAAAST-Service-docfx/blob/ff94a287be9aa5c32a51440e7e57c6434366a999/docs/articles/GettingStarted.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

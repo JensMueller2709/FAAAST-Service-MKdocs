@@ -1,0 +1,8 @@
+- name: Writing Config Files
+  href: articles/configuration.md
+- name: How to use the Lib
+  href: articles/GettingStarted.md
+- name: How to use the HTTP Endpoint
+  href: articles/httpendpoint.md
+- name: How to use the OPCUA Endpoint
+  href: articles/opcuaendpoint.md
